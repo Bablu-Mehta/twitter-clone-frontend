@@ -13,12 +13,21 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DoneIcon from '@mui/icons-material/Done';
 // import ListItemIcon from '@mui/icons-material/ListItemIcon';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { Avatar, Button, IconButton } from '@mui/material';
+import { Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 
-const Sidebar = () =>{
+const Sidebar = ({hangleLogout, user}) =>{
 
     const [anchorEl, setAnchorEl] = useState(null);
     const openMenu = Boolean(anchorEl);
+
+    const handleClick = e =>{
+        setAnchorEl(e.currentTarget);
+    }
+
+    const handleClose =()=>{
+        setAnchorEl(null);
+    }
+
     return(
         <div className='sidebar'>
             <TwitterIcon className='sidebar_twitterIcon' />
@@ -43,9 +52,29 @@ const Sidebar = () =>{
                  size='small'
                   sx={{ml: 2}}
                   aria-controls={openMenu ? "basic-menu":undefined}
+                  aria-haspopup='true'
+                  aria-aria-expanded={openMenu ? "true":undefined}
+                  onClick={handleClick}
                   > 
                   <MoreHorizIcon/> 
                   </IconButton>
+
+                  <Menu id='basic-menu' anchorEl={anchorEl} open={openMenu} onClick={handleClose} onClose={handleClose}>
+                    <MenuItem className='Profile_info1'>
+                        <Avatar src='' />
+                        <div className='user_info subUser_info'>
+                            <div>
+                            <h4>Bablu Mehta</h4>
+                            <h5>@mr_mehta_15</h5>
+                            </div>
+                            <ListItemIcon className='done_icon'> <DoneIcon/> </ListItemIcon>
+                        </div>
+                    </MenuItem>
+                    <Divider/>
+                    <MenuItem onClick={handleClose}>Add an Existing Account</MenuItem>
+                    <MenuItem onClick={hangleLogout}>Logout @mr_mehta_15</MenuItem>
+
+                  </Menu>
             </div>
         </div>
     );
