@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "./Sidebar/Sidebar";
-import Feed from "./Feed/Feed";
+import {Outlet} from 'react-router-dom'
 import Widgets from "./Widgets/Widgets";
 import auth from "../firebase.init";
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -16,7 +16,7 @@ const Home = () =>{
     return(
         <div className="app">
             <Sidebar hangleLogout={handleLogout} user={user} />
-            <Feed />
+            <Outlet/>
             <Widgets />
         </div>
     )

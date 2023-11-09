@@ -14,6 +14,7 @@ import DoneIcon from '@mui/icons-material/Done';
 // import ListItemIcon from '@mui/icons-material/ListItemIcon';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
+import CustomLink from './CustomLink';
 
 const Sidebar = ({hangleLogout, user}) =>{
 
@@ -31,14 +32,38 @@ const Sidebar = ({hangleLogout, user}) =>{
     return(
         <div className='sidebar'>
             <TwitterIcon className='sidebar_twitterIcon' />
-            <SidebarOptions active Icon={HomeIcon} text='Home'/>
-            <SidebarOptions active Icon={SearchIcon} text='Explore'/>
-            <SidebarOptions active Icon={NotificationsIcon} text='Notification'/>
-            <SidebarOptions active Icon={MailOutlineIcon} text='Messages'/>
-            <SidebarOptions active Icon={BookmarkIcon} text='Bookmarks'/>
-            <SidebarOptions active Icon={ListAltIcon} text='Lists'/>
-            <SidebarOptions active Icon={PermIdentityIcon} text='Profile'/>
-            <SidebarOptions active Icon={MoreVertIcon} text='More'/>
+
+            <CustomLink to='/home/feed'>
+                <SidebarOptions active Icon={HomeIcon} text='Home'/>
+            </CustomLink>
+
+            <CustomLink to='/home/explore'>
+                <SidebarOptions active Icon={SearchIcon} text='Explore'/>
+            </CustomLink>
+
+            <CustomLink to='/home/notifications'>
+                <SidebarOptions active Icon={NotificationsIcon} text='Notification'/>
+            </CustomLink>
+
+            <CustomLink to='/home/messages'>
+                <SidebarOptions active Icon={MailOutlineIcon} text='Messages'/>
+            </CustomLink>
+
+            <CustomLink to='/home/bookmarks'>
+                <SidebarOptions active Icon={BookmarkIcon} text='Bookmarks'/>
+            </CustomLink>
+
+            <CustomLink to='/home/lists'>
+                <SidebarOptions active Icon={ListAltIcon} text='Lists'/>
+            </CustomLink>
+
+            <CustomLink to='/home/profile'>
+                <SidebarOptions active Icon={PermIdentityIcon} text='Profile'/>
+            </CustomLink>
+
+            <CustomLink to='/home/more'>
+                <SidebarOptions active Icon={MoreVertIcon} text='More'/>
+            </CustomLink>
 
             <Button variant='outlined' className='sidebar_tweet'>Tweet</Button>
 
