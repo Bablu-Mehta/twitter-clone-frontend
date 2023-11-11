@@ -3,8 +3,8 @@ import "./TweetBox.css";
 import { Avatar, Button } from "@mui/material";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import axios from "axios";
-import { useUserAuth } from "../../../context/UserAuthContext";
-import useLoggedInUser from "../../../hooks/useLoggedInUser";
+import { useUserAuth } from "../../context/UserAuthContext";
+import useLoggedInUser from "../../hooks/useLoggedInUser";
 
 function TweetBox() {
     const [post, setPost] = useState('')

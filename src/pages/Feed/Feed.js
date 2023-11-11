@@ -1,10 +1,12 @@
 import {react} from 'react';
 import './feed.css';
+import TweetBox from './TweetBox';
+
 
 const Feed = () =>{
     return(
         <div>
-            <h1>Feed</h1>
+            <TweetBox/>
         </div>
     );
 };
