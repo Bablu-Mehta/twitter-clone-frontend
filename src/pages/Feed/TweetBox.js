@@ -3,11 +3,16 @@ import "./TweetBox.css";
 import { Avatar, Button } from "@mui/material";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import axios from "axios";
+import useLoggedInUser from "../../hooks/useLoggedInUser";
 //import axios from "axios";
 function TweetBox() {
     const [post, setPost] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [isLoading, setIsLoading] = useState('');
+    const [loggedInUser] = useLoggedInUser();
+    //console.log(loggedInUser);
+
+    const userProfilePic = loggedInUser[0]?.profileImage ? loggedInUser[0]?.profileImage : "";
 
     const handleUploadImage = (e) =>{
         setIsLoading(true);

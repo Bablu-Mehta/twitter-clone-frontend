@@ -15,11 +15,16 @@ import DoneIcon from '@mui/icons-material/Done';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import CustomLink from './CustomLink';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
 
 const Sidebar = ({hangleLogout, user}) =>{
 
     const [anchorEl, setAnchorEl] = useState(null);
     const openMenu = Boolean(anchorEl);
+    const [loggedInUser] = useLoggedInUser();
+
+
+    const userProfilePic = loggedInUser[0]?.profileImage ? loggedInUser[0]?.profileImage : "";
 
     const handleClick = e =>{
         setAnchorEl(e.currentTarget);
@@ -68,7 +73,7 @@ const Sidebar = ({hangleLogout, user}) =>{
             <Button variant='outlined' className='sidebar_tweet'>Tweet</Button>
 
             <div className='Profile_info'>
-                <Avatar src='' />
+                <Avatar src={userProfilePic} />
                 <div className='user_info'>
                     <h4>Bablu Mehta</h4>
                     <h5>@mr_mehta_15</h5>
