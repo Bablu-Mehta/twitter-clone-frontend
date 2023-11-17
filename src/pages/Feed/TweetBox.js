@@ -4,15 +4,23 @@ import { Avatar, Button } from "@mui/material";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import axios from "axios";
 import useLoggedInUser from "../../hooks/useLoggedInUser";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 //import axios from "axios";
 function TweetBox() {
     const [post, setPost] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [isLoading, setIsLoading] = useState('');
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [loggedInUser] = useLoggedInUser();
+    const [user] = useAuthState(auth);
     //console.log(loggedInUser);
 
-    const userProfilePic = loggedInUser[0]?.profileImage ? loggedInUser[0]?.profileImage : "";
+    const email = user?.email;
+
+    
+    const userProfilePic = loggedInUser[0]?.profileImage ? loggedInUser[0]?.profileImage : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
 
     const handleUploadImage = (e) =>{
         setIsLoading(true);
@@ -33,25 +41,46 @@ function TweetBox() {
     }
 
 
-    const handleTweet = (e) =>{
+    const handleTweet = async (e) =>{
         e.preventDefault();
-        
-       if(imageUrl)
-    {
-        const userPost = {
-            post:post,
-            photo:imageUrl
+        if(user?.providerData[0]?.providerId === 'password')
+        {
+            fetch(`http://localhost:5000/loggedInUser?email=${email}`)
+            .then(res => res.json())
+                .then(data => {
+                    setName(data.name )
+                    setUsername(data.username)
+                })
         }
-        console.log(userPost);
-        fetch('http://localhost:5000/post',{
-            method:'POST',
-            headers:{
-                'content-type':'application/json'
-            },
-            body:JSON.stringify(userPost)
-        }).then((res)=>res.json()).then(data => console.log(data)).catch(error =>{console.log("fetch error" + error)});
-  
-    }  
+        else{
+            setName(user?.displayName)
+            setUsername(email?.split('@')[0])
+        }
+
+        if(name)
+        {
+            const userPost = {
+                profilPhot:userProfilePic,
+                post:post,
+                photo:imageUrl,
+                username:username,
+                name:name,
+                email:email
+            }
+
+            console.log(userPost);
+
+            fetch('http://localhost:5000/post',{
+                method:'POST',
+                headers:{
+                    'content-type':'application/json'
+                },
+                body:JSON.stringify(userPost)
+            }).then((res)=>res.json()).then(data => console.log(data)).catch(error =>{console.log("fetch error" + error)});
+    
+        }  
+        
+      
 
 }
 

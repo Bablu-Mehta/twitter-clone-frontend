@@ -23,8 +23,10 @@ const Sidebar = ({hangleLogout, user}) =>{
     const openMenu = Boolean(anchorEl);
     const [loggedInUser] = useLoggedInUser();
 
+    
 
-    const userProfilePic = loggedInUser[0]?.profileImage ? loggedInUser[0]?.profileImage : "";
+    const userProfilePic = loggedInUser[0]?.profileImage ? loggedInUser[0]?.profileImage : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" ;
+
 
     const handleClick = e =>{
         setAnchorEl(e.currentTarget);
@@ -33,6 +35,9 @@ const Sidebar = ({hangleLogout, user}) =>{
     const handleClose =()=>{
         setAnchorEl(null);
     }
+
+
+    const result = user[0]?.email?.split('@')[0];
 
     return(
         <div className='sidebar'>
@@ -75,8 +80,12 @@ const Sidebar = ({hangleLogout, user}) =>{
             <div className='Profile_info'>
                 <Avatar src={userProfilePic} />
                 <div className='user_info'>
-                    <h4>Bablu Mehta</h4>
-                    <h5>@mr_mehta_15</h5>
+                    <h4>
+                        {
+                            loggedInUser.name ? loggedInUser.name : user && user.displayName
+                        }
+                    </h4>
+                    <h5>@{result}</h5>
                 </div>
                 <IconButton
                  size='small'
@@ -91,18 +100,22 @@ const Sidebar = ({hangleLogout, user}) =>{
 
                   <Menu id='basic-menu' anchorEl={anchorEl} open={openMenu} onClick={handleClose} onClose={handleClose}>
                     <MenuItem className='Profile_info1'>
-                        <Avatar src='' />
+                        <Avatar src={userProfilePic} />
                         <div className='user_info subUser_info'>
                             <div>
-                            <h4>Bablu Mehta</h4>
-                            <h5>@mr_mehta_15</h5>
+                            <h4>
+                        {
+                            loggedInUser.name ? loggedInUser.name : user && user.displayName
+                        }
+                    </h4>
+                    <h5>@{result}</h5>
                             </div>
                             <ListItemIcon className='done_icon'> <DoneIcon/> </ListItemIcon>
                         </div>
                     </MenuItem>
                     <Divider/>
                     <MenuItem onClick={handleClose}>Add an Existing Account</MenuItem>
-                    <MenuItem onClick={hangleLogout}>Logout @mr_mehta_15</MenuItem>
+                    <MenuItem onClick={hangleLogout}>Logout @{result}</MenuItem>
 
                   </Menu>
             </div>
