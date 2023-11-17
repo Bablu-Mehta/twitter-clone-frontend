@@ -68,7 +68,8 @@ function TweetBox() {
                 email:email
             }
 
-            console.log(userPost);
+            setPost('');
+            setImageUrl('')
 
             fetch('http://localhost:5000/post',{
                 method:'POST',
@@ -92,7 +93,8 @@ function TweetBox() {
                     type="text"
                     placeholder="What's happening?"
                     onChange={(e) => setPost(e.target.value)}
-                   
+                   value={post}
+                   required
                 />
 
             </div>
