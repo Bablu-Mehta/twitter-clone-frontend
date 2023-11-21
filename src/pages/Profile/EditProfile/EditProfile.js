@@ -2,7 +2,9 @@ import React from 'react'
 import './EditProfile.css'
  const EditProfile = () => {
   return (
-    <div>This is EditProfile</div>
+    <div>
+      <button>Edit Profile</button>
+    </div>
   )
 }
 

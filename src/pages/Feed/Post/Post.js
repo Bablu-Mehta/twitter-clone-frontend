@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PublishIcon from '@mui/icons-material/Publish';
 
  const Post = ({p}) => {
+    
     const {name, username, photo, post, profilePhoto} = p;
   return (
     <div className='post'>

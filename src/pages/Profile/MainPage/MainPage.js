@@ -9,6 +9,7 @@ import MyLocationIcon from '@mui/icons-material/MyLocation';
 import AddLinkIcon from '@mui/icons-material/AddLink';
 import Post from '../../Feed/Post/Post';
 import axios from 'axios';
+import EditProfile from '../EditProfile/EditProfile'
 
 
 const MainPage = ({user}) => {
@@ -23,12 +24,13 @@ const MainPage = ({user}) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(()=>{
-      fetch("http://localhost:5000/post")
+      fetch(`http://localhost:5000/userPost?${user?.email}`)
       .then(res => res.json())
       .then(data => {
+        console.log("user email" + user?.email);
           setPosts(data);
       })
-  },[posts]);
+  },[posts, user?.email]);
 
   const handleUploadCoverImage = (e) =>{
     setIsLoading(true);
@@ -40,10 +42,13 @@ const MainPage = ({user}) => {
         axios.post('https://api.imgbb.com/1/upload?key=95133aaeb95425950d0842157f7b15cb', formData)
         .then(res =>{
           const url = res.data.data.display_url
-            //setImageUrl(res.data.data.display_url)
+            const userCoverImage = {
+              email: user?.email,
+              coverImage: url
+            }
             setIsLoading(false);
             if(url){
-              console.log(url);
+              axios.patch(`http://localhost:5000/userUpdates/${user?.email}`, userCoverImage);
             }
         }).catch(error=>{
             console.log(error);
@@ -61,10 +66,13 @@ const MainPage = ({user}) => {
     axios.post('https://api.imgbb.com/1/upload?key=95133aaeb95425950d0842157f7b15cb', formData)
     .then(res =>{
       const url = res.data.data.display_url
-        //setImageUrl(res.data.data.display_url)
+      const userProfileImage = {
+        email: user?.email,
+        profileImage: url
+      }
         setIsLoading(false);
         if(url){
-          console.log(url);
+          axios.patch(`http://localhost:5000/userUpdates/${user?.email}`, userProfileImage);
         }
     }).catch(error=>{
         console.log(error);
@@ -77,13 +85,13 @@ const MainPage = ({user}) => {
   return (
     <div>
       <ArrowBackIcon className='arrow-icon' onClick={()=>{navigate('/')}}/>
-      <h4>@{username}</h4>
+      <h4 className='heading-4'>@{username}</h4>
       <div className='mainProfile'>
         <div className='profile-bio'>
           {
             <div>
               <div className='coverImageContainer'>
-                <img src={loggedInUser[0]?.coverImage ? loggedInUser[0]?.coverImage : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} 
+                <img src={loggedInUser.coverImage ? loggedInUser.coverImage : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} 
                 alt="" className='coverImage'/>
                 <div className='hoverCoverImage'>
                 <label htmlFor='image' className='imageIcon'>
@@ -101,7 +109,7 @@ const MainPage = ({user}) => {
               </div>
               <div className='avatar-img'>
                 <div className='avatarContainer'>
-                  <img src='https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png' className='avatar' />
+                  <img src={loggedInUser.profileImage ? loggedInUser.profileImage : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} className='avatar' />
               
                 <div className='hoverAvatarImage'>
                   <div className='imageIcon_tweetButton'>
@@ -122,15 +130,17 @@ const MainPage = ({user}) => {
                 <div className='userInfo'>
                   <div>
                     <h3 className='heading-3'>
-                    {loggedInUser[0]?.name ? loggedInUser[0]?.name : user && user?.displayName}
+                    {loggedInUser.name ? loggedInUser.name : user && user?.displayName}
                     </h3>
                     <p className='usernameSection'>@{username}</p>
+                  </div>
+                  <EditProfile />
                   </div>
                   <div className='infoContainer'>
                       {loggedInUser[0]?.bio ? loggedInUser[0]?.bio : ''}
                       <div className='locationAndLink'>
-                      {loggedInUser[0]?.location ? <p className='subInfo'><MyLocationIcon/>{loggedInUser[0]?.location}</p> : ''}
-                      {loggedInUser[0]?.website ? <p className='subInfo'><AddLinkIcon/>{loggedInUser[0]?.website}</p> : ''}
+                      {loggedInUser[0]?.location ? <p className='subInfo'><MyLocationIcon/>{loggedInUser.location}</p> : ''}
+                      {loggedInUser[0]?.website ? <p className='subInfo'><AddLinkIcon/>{loggedInUser.website}</p> : ''}
                      </div>
                   </div>
                   <h4 className='tweetText'>Tweets</h4>
@@ -140,7 +150,6 @@ const MainPage = ({user}) => {
                   posts.map((p) =><Post id={p._id} p={p} />)
                 }
               </div>
-            </div>
           }
         </div>
       </div>
