@@ -3,7 +3,7 @@ import './EditProfile.css'
  const EditProfile = () => {
   return (
     <div>
-      <button>Edit Profile</button>
+      <button className='Edit-profile-btn'>Edit Profile</button>
     </div>
   )
 }

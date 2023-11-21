@@ -24,13 +24,14 @@ const MainPage = ({user}) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(()=>{
-      fetch(`http://localhost:5000/userPost?${user?.email}`)
+      fetch(`http://localhost:5000/userPost?email=${user?.email}`)
       .then(res => res.json())
       .then(data => {
-        console.log("user email" + user?.email);
+        console.log(data);
+        console.log("userEmail " + user?.email);
           setPosts(data);
       })
-  },[posts, user?.email]);
+  },[posts]);
 
   const handleUploadCoverImage = (e) =>{
     setIsLoading(true);
