@@ -28,10 +28,9 @@ const MainPage = ({user}) => {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        console.log("userEmail " + user?.email);
           setPosts(data);
       })
-  },[posts]);
+  },[posts, user?.email]);
 
   const handleUploadCoverImage = (e) =>{
     setIsLoading(true);
@@ -110,7 +109,7 @@ const MainPage = ({user}) => {
               </div>
               <div className='avatar-img'>
                 <div className='avatarContainer'>
-                  <img src={loggedInUser.profileImage ? loggedInUser.profileImage : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} className='avatar' />
+                  <img src={loggedInUser.profileImage ? loggedInUser.profileImage : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} className='avatar' alt='avatar' />
               
                 <div className='hoverAvatarImage'>
                   <div className='imageIcon_tweetButton'>
@@ -135,7 +134,7 @@ const MainPage = ({user}) => {
                     </h3>
                     <p className='usernameSection'>@{username}</p>
                   </div>
-                  <EditProfile />
+                  <EditProfile user={user} loggedInUser={loggedInUser} />
                   </div>
                   <div className='infoContainer'>
                       {loggedInUser[0]?.bio ? loggedInUser[0]?.bio : ''}
