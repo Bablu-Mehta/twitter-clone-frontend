@@ -1,8 +1,9 @@
 import React from 'react'
 import Modal from '@mui/material/Modal'
 import './EditProfile.css'
-import { Box, IconButton, TextField } from '@mui/material';
+import { Box, Button, IconButton, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 
 const style ={
@@ -40,7 +41,17 @@ function EditChild({dob, setDob}){
       aria-labelledby="child-modal-title"
       aria-describedby="child-modal-description"
       >
-        <Box>
+        <Box sx={{...style, width:300, height:300}}>
+          <div className='text'>
+            <h2>Edit Date of Birth?</h2>
+            <p>This can only be changed few times.<br />
+            make sure you enter the age of the <br />
+            person using account</p>
+            <input type='date'
+            onChange={e=>{setDob(e.target.value)}}
+            />
+            <Button className='e-button' onClick={()=>setOpen(false)}>Cancel</Button>
+          </div>
           
         </Box>
       </Modal>
@@ -96,7 +107,21 @@ export default function EditProfile({user, loggedInUser}) {
               <p>.</p>
               <EditChild dob={dob} setDob={setDob} />
             </div>
-            <div className='last-section'></div>
+            <div className='last-section'>
+              {
+                loggedInUser?.dob ? 
+                <h2>{loggedInUser?.dob}</h2>
+                :
+                <h2>{
+                  dob ? dob : 'Add your Date of Birth'
+                  }</h2>
+              }
+              <div className='last-btn'>
+                <h2>switch to professional</h2>
+                <ChevronRightIcon />
+              </div>
+            </div>
+
         </Box>
 
 
