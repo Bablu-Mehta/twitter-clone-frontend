@@ -137,10 +137,10 @@ const MainPage = ({user}) => {
                   <EditProfile user={user} loggedInUser={loggedInUser} />
                   </div>
                   <div className='infoContainer'>
-                      {loggedInUser[0]?.bio ? loggedInUser[0]?.bio : ''}
+                      {loggedInUser?.bio ? loggedInUser?.bio : ''}
                       <div className='locationAndLink'>
-                      {loggedInUser[0]?.location ? <p className='subInfo'><MyLocationIcon/>{loggedInUser.location}</p> : ''}
-                      {loggedInUser[0]?.website ? <p className='subInfo'><AddLinkIcon/>{loggedInUser.website}</p> : ''}
+                      {loggedInUser?.location ? <p className='subInfo'><MyLocationIcon/>{loggedInUser.location}</p> : ''}
+                      {loggedInUser?.website ? <p className='subInfo link'><AddLinkIcon/>{loggedInUser.website}</p> : ''}
                      </div>
                   </div>
                   <h4 className='tweetText'>Tweets</h4>
